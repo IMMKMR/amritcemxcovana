@@ -108,6 +108,7 @@
 
 </section>
 
+
 <section class="platform-section" id="reels" style="background:#f9f9f9; padding: 80px 48px;">
   <div class="platform-header reveal">
     <div class="platform-icon instagram">🎬</div>
@@ -127,22 +128,23 @@
         <div class="ig-phone" style="max-width:320px;width:100%;box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-radius: 40px; border: 12px solid #000; overflow:hidden;">
           <div class="ig-phone-notch" style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:120px; height:24px; background:#000; border-bottom-left-radius:16px; border-bottom-right-radius:16px; z-index:10;"></div>
           <div class="ig-phone-screen" style="position:relative;">
-            <div style="aspect-ratio:9/16;background:linear-gradient(135deg,#f0f2f5 0%,#e4e6e9 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-              <div id="reelVideoContainer" style="position:absolute;inset:0;display:none;">
-                <video id="reelVideo" style="width:100%;height:100%;object-fit:cover;" loop muted playsinline></video>
+            <div style="aspect-ratio:9/16;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+              
+              <div id="reelVideoContainer" style="position:absolute;inset:0;">
+                <video id="reelVideo" src="assets/reel-video.mp4" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" autoplay loop muted playsinline onclick="if(this.paused){this.play();}else{this.pause();}"></video>
               </div>
-              <div id="reelPlaceholder" style="position:relative;text-align:center;padding:24px;">
-                <div style="width:72px;height:72px;border-radius:50%;border:2px solid rgba(200,16,46,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;background:rgba(200,16,46,0.1);">
-                  <span style="font-size:28px;">▶</span>
-                </div>
-                <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px;">Reel Coming Soon</div>
-                <div style="font-size:13px;color:var(--text-muted);line-height:1.5;">Short-form brand video content<br>will be showcased here</div>
-                <label for="reelUpload" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 24px;border-radius:50px;background:rgba(200,16,46,0.2);border:1px solid rgba(200,16,46,0.4);color:var(--red-primary);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s;">
-                  📎 Drop Reel Video
-                </label>
-                <input type="file" id="reelUpload" accept="video/*" style="display:none;" onchange="loadReelVideo(this)">
-              </div>
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.7));">
+
+              <!-- Fullscreen button overlay -->
+              <button onclick="const v = document.getElementById('reelVideo'); if(v.requestFullscreen) { v.requestFullscreen(); v.muted=false; } else if(v.webkitRequestFullscreen) { v.webkitRequestFullscreen(); v.muted=false; }" style="position:absolute;top:36px;right:16px;background:rgba(0,0,0,0.6);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;z-index:20;display:flex;align-items:center;gap:6px;cursor:pointer;backdrop-filter:blur(4px);">
+                ⛶ Fullscreen
+              </button>
+              
+              <!-- Mute/Unmute button overlay -->
+              <button onclick="const v = document.getElementById('reelVideo'); v.muted = !v.muted; this.innerText = v.muted ? '🔇 Muted' : '🔊 Sound On';" style="position:absolute;top:36px;left:16px;background:rgba(0,0,0,0.6);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;z-index:20;display:flex;align-items:center;gap:6px;cursor:pointer;backdrop-filter:blur(4px);">
+                🔇 Muted
+              </button>
+
+              <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,0.8));z-index:10;pointer-events:none;">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                   <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--red-primary),var(--gold));display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;">AC</div>
                   <span style="font-size:13px;font-weight:600;color:#fff;">amritcem</span>
@@ -150,7 +152,7 @@
                 </div>
                 <div style="font-size:13px;color:#fff;line-height:1.4;">Building dreams, one foundation at a time 🏗️ #AmritCem #DhalaiDiwas</div>
               </div>
-              <div style="position:absolute;right:12px;bottom:80px;display:flex;flex-direction:column;gap:16px;align-items:center;color:#fff;">
+              <div style="position:absolute;right:12px;bottom:80px;display:flex;flex-direction:column;gap:16px;align-items:center;color:#fff;z-index:10;pointer-events:none;">
                 <div style="text-align:center;"><div style="font-size:24px;">♡</div><div style="font-size:11px;font-weight:bold;">24.5K</div></div>
                 <div style="text-align:center;"><div style="font-size:24px;">💬</div><div style="font-size:11px;font-weight:bold;">1,847</div></div>
                 <div style="text-align:center;"><div style="font-size:24px;">↗</div><div style="font-size:11px;font-weight:bold;">Share</div></div>
@@ -418,19 +420,7 @@ window.addEventListener('scroll', () => {
     window.scrollY > 50 ? '10px 48px' : '16px 48px';
 });
 
-// Reel video upload handler
-function loadReelVideo(input) {
-  if(input.files && input.files[0]) {
-    const url = URL.createObjectURL(input.files[0]);
-    const container = document.getElementById('reelVideoContainer');
-    const video = document.getElementById('reelVideo');
-    const placeholder = document.getElementById('reelPlaceholder');
-    video.src = url;
-    container.style.display = 'block';
-    placeholder.style.display = 'none';
-    video.play();
-  }
-}
+
 
 // Init
 initCarousel('igCarousel');
