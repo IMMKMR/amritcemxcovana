@@ -11,6 +11,33 @@
     video:-webkit-full-screen { object-fit: contain !important; background: #000; }
     video:-ms-fullscreen { object-fit: contain !important; background: #000; }
   </style>
+
+  <style>
+    .kv-showcase-grid {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap; /* Stacks on mobile */
+      margin-top: 40px;
+    }
+    .kv-showcase-grid .kv-item {
+      width: 100%; /* Full width on mobile */
+      max-width: 500px;
+    }
+    .kv-showcase-grid .kv-item img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+    @media (min-width: 768px) {
+      .kv-showcase-grid {
+        flex-wrap: nowrap; /* Side-by-side on desktop */
+      }
+      .kv-showcase-grid .kv-item {
+        width: calc(33.333% - 22px);
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -320,9 +347,10 @@
     <h2 class="section-title">Campaign Hero Imagery</h2>
     <p class="section-desc">High-impact key visuals designed for outdoor, print, and digital media — capturing the essence of AmritCem's brand pillars.</p>
   </div>
-  <div class="kv-showcase" style="display: flex; justify-content: center; gap: 32px; flex-wrap: nowrap;">
-    <div class="kv-item reveal" style="max-width: 500px; width: 50%;"><img src="assets/kv-new.jpeg" alt="Campaign Hero KV" style="width: 100%; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.1);"></div>
-    <div class="kv-item reveal" style="max-width: 500px; width: 50%;"><img src="assets/kv-2-new.jpeg" alt="Campaign Hero KV 2" style="width: 100%; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.1);"></div>
+  <div class="kv-showcase-grid">
+    <div class="kv-item reveal"><img src="assets/kv-new.jpeg" alt="Campaign Hero KV" ></div>
+    <div class="kv-item reveal"><img src="assets/kv-2-new.jpeg" alt="Campaign Hero KV 2" ></div>
+    <div class="kv-item reveal"><img src="assets/kv-3.jpeg" alt="Campaign Hero KV 3" ></div>
   </div>
 </section>
 
