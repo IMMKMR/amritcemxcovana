@@ -163,7 +163,12 @@
             <div style="width:100%; padding-bottom:177.77%; background:#000; display:block; position:relative; overflow:hidden;">
               
               <div id="reelVideoContainer" style="position:absolute;inset:0;">
-                <video id="reelVideo" src="assets/reel-video.mp4" poster="assets/kv-new.jpeg" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" autoplay loop muted playsinline onclick="if(this.paused){this.play();}else{this.pause();}"></video>
+                <video id="reelVideo" src="assets/reel-video.mp4" poster="assets/kv-new.jpeg" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" autoplay loop muted playsinline webkit-playsinline preload="auto" onclick="if(this.paused){this.play();}else{this.pause();}"></video>
+                <!-- Loading Spinner -->
+                <div id="reelLoadingSpinner" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); z-index:14; pointer-events:none;">
+                  <div style="width:40px; height:40px; border:4px solid rgba(255,255,255,0.3); border-top:4px solid #fff; border-radius:50%; animation: spin 1s linear infinite;"></div>
+                </div>
+                <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
                 <!-- Central Play Button for Mobile Fallback -->
                 <div id="reelPlayOverlay" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); z-index:15; cursor:pointer;" onclick="const v = document.getElementById('reelVideo'); v.play(); this.style.display='none'; v.muted=false;">
                   <div style="width:64px; height:64px; background:rgba(255,255,255,0.8); border-radius:50%; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
@@ -172,9 +177,16 @@
                 </div>
               </div>
               <script>
-                // Hide overlay if video manages to autoplay
+                // Hide loading spinner when enough data is loaded
+                document.getElementById('reelVideo').addEventListener('canplay', function() {
+                  document.getElementById('reelLoadingSpinner').style.display = 'none';
+                });
                 document.getElementById('reelVideo').addEventListener('playing', function() {
                   document.getElementById('reelPlayOverlay').style.display = 'none';
+                  document.getElementById('reelLoadingSpinner').style.display = 'none';
+                });
+                document.getElementById('reelVideo').addEventListener('waiting', function() {
+                  document.getElementById('reelLoadingSpinner').style.display = 'flex';
                 });
               </script>
 
